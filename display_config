@@ -1,0 +1,36 @@
+#!/bin/zsh
+# Display configuration for monitor at home, right of laptop.
+
+
+# Functions
+usage()
+{
+	echo "help: display [[[-a ] [-w]] | [-h]]"
+}
+
+# Main
+location=
+
+while [ "$1" != "" ]; do
+	case $1 in
+		-a | --home )   location=1
+			        ;;
+		-w | --work )   location=2
+			        ;;
+		-h | --help )   usage
+			        exit
+				;;
+		* )             usage
+			        exit 1
+	esac
+	shift
+done
+
+if [ "$location" = "1" ]; then
+	echo "Setting display configuration to HOME"
+	xrandr --output DP1 --auto --right-of eDP1
+fi
+if [ "$location" = "2" ]; then
+	echo "Setting display configuration to WORK"
+	xrandr --output DP1 --auto --above eDP1
+fi
